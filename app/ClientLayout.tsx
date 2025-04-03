@@ -7,7 +7,8 @@ import '@aws-amplify/ui-react/styles.css'; // Import the styles
 import amplifyconfig from "@/amplify_outputs.json";
 
 // Configure Amplify with SSR support
-Amplify.configure({ ...amplifyconfig, ssr: true });
+//Amplify.configure({ ...amplifyconfig, ssr: true });
+Amplify.configure({ ...amplifyconfig, ssr: true } as any);
 
 export default function RootLayout({
   children,

@@ -8,7 +8,6 @@ import { Amplify } from "aws-amplify";
 import outputs from "@/amplify_outputs.json";
 import "@aws-amplify/ui-react/styles.css";
 import Navbar from '@/components/Navbar';
-
 import { useAuthenticator } from '@aws-amplify/ui-react';
 
 Amplify.configure(outputs);
@@ -20,8 +19,8 @@ export default function App() {
   const { user, signOut } = useAuthenticator((context) => [context.user]);
 
   function listTodos() {
-    client.models.Todo.observeQuery().subscribe({
-      next: (data) => setTodos([...data.items]),
+    client.models.Todo.observeQuery({}).subscribe({
+      next: (data: { items: Schema["Todo"]["type"][] }) => setTodos([...data.items]),
     });
   }
 

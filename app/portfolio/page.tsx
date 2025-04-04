@@ -2,6 +2,8 @@
 'use client';
 
 import Navbar from '@/components/Navbar';
+import { API, graphqlOperation } from 'aws-amplify';
+import { createStock } from '../graphql/mutations';
 
 export default function Portfolio() {
   return (

@@ -3,6 +3,10 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./app.css";
 import ClientLayout from './ClientLayout';
+import Amplify from 'aws-amplify';
+import config from '../aws-exports';
+
+Amplify.configure(config);
 
 const inter = Inter({ subsets: ["latin"] });
 

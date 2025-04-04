@@ -9,7 +9,7 @@ import '../portfolio/portfolio.css'; // Import the CSS file
 // Define the stock type for TypeScript
 type Stock = {
   symbol: string;
-  type: 'ETF' | 'Stock' | 'Crypto';
+  type: 'ETF' | 'STOCK' | 'CRYPTO';
   region: 'US' | 'EU' | 'APAC';
   name: string;
   pdp: number;
@@ -25,7 +25,7 @@ export default function Portfolio() {
   // State for form fields
   const [stock, setStock] = useState<Stock>({
     symbol: '',
-    type: 'Stock',
+    type: 'STOCK',
     region: 'US',
     name: '',
     pdp: 0,
@@ -62,7 +62,7 @@ export default function Portfolio() {
       // Reset form after successful submission
       setStock({
         symbol: '',
-        type: 'Stock',
+        type: 'STOCK',
         region: 'US',
         name: '',
         pdp: 0,
@@ -71,6 +71,10 @@ export default function Portfolio() {
       });
     } catch (error) {
       console.error('Error adding stock:', error);
+      // Log the detailed error structure
+      if (error.errors) {
+        console.error('Detailed errors:', JSON.stringify(error.errors, null, 2));
+      }
       setMessage({ text: 'Error adding stock. Please try again.', type: 'error' });
     } finally {
       setIsLoading(false);
@@ -110,9 +114,9 @@ export default function Portfolio() {
               value={stock.type}
               onChange={handleChange}
             >
-              <option value="Stock">Stock</option>
+              <option value="STOCK">Stock</option>
               <option value="ETF">ETF</option>
-              <option value="Crypto">Crypto</option>
+              <option value="CRYPTO">Crypto</option>
             </select>
           </div>
 

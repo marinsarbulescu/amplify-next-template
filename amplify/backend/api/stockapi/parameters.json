@@ -1,0 +1,12 @@
+{
+  "AppSyncApiName": "stockapi",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authamplifynexttemplate449b3a40",
+      "Outputs.UserPoolId"
+    ]
+  },
+  "AuthModeLastUpdated": "2025-04-04T22:00:23.606Z"
+}

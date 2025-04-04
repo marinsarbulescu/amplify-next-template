@@ -12,8 +12,26 @@
       "AmplifyAppId": "d124gfy2oh6ynk"
     },
     "categories": {
-      "api": {
-        "amplifynexttemplate": {}
+      "auth": {
+        "amplifynexttemplate449b3a40": {}
+      }
+    }
+  },
+  "locdev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-amplifynexttemplate-locdev-a1b8e-authRole",
+      "UnauthRoleArn": "arn:aws:iam::365608576085:role/amplify-amplifynexttemplate-locdev-a1b8e-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::365608576085:role/amplify-amplifynexttemplate-locdev-a1b8e-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-amplifynexttemplate-locdev-a1b8e-deployment",
+      "UnauthRoleName": "amplify-amplifynexttemplate-locdev-a1b8e-unauthRole",
+      "StackName": "amplify-amplifynexttemplate-locdev-a1b8e",
+      "StackId": "arn:aws:cloudformation:us-east-2:365608576085:stack/amplify-amplifynexttemplate-locdev-a1b8e/b55f9da0-119f-11f0-8535-0a62872279d3",
+      "AmplifyAppId": "d1tf9mvzz1on3g"
+    },
+    "categories": {
+      "auth": {
+        "amplifynexttemplate449b3a40": {}
       }
     }
   }

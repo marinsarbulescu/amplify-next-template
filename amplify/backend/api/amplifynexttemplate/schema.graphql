@@ -2,21 +2,25 @@
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
 input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
 
-type Blog @model {
+enum StockType {
+  ETF
+  STOCK
+  CRYPTO
+}
+
+enum Region {
+  US
+  EU
+  APAC
+}
+
+type Stock @model {
   id: ID!
+  symbol: String!
+  type: StockType!
+  region: Region!
   name: String!
-  posts: [Post] @hasMany
-}
-
-type Post @model {
-  id: ID!
-  title: String!
-  blog: Blog @belongsTo
-  comments: [Comment] @hasMany
-}
-
-type Comment @model {
-  id: ID!
-  post: Post @belongsTo
-  content: String!
+  pdp: Float  # Price Dip Percent, used for buy/sell signals
+  plr: Float  # Profit Loss Ratio, used for calculating profit/loss
+  budget: Float  # Annual budget available for this stock
 }

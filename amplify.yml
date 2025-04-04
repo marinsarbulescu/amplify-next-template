@@ -5,7 +5,7 @@ backend:
       commands:
         - nvm use 20
         - npm ci --cache .npm --prefer-offline
-        - npm install -g aws-cdk-lib@latest aws-cdk@latest
+        - npm install -g aws-cdk-lib@2.100.0 aws-cdk@2.100.0
         - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
 frontend:
   phases:

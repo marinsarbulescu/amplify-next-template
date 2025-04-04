@@ -1,10 +1,10 @@
-// app/portfolio/page.tsx
 'use client';
 
 import { useState, FormEvent } from 'react';
 import { generateClient } from 'aws-amplify/api';
 import { createStock } from '@/src/graphql/mutations';
 import Navbar from '@/components/Navbar';
+import '../portfolio/portfolio.css'; // Import the CSS file
 
 // Define the stock type for TypeScript
 type Stock = {
@@ -19,6 +19,8 @@ type Stock = {
 
 export default function Portfolio() {
   const client = generateClient();
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState({ text: '', type: '' });
 
   // State for form fields
   const [stock, setStock] = useState<Stock>({
@@ -45,6 +47,8 @@ export default function Portfolio() {
   // Handle form submission
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
+    setMessage({ text: '', type: '' });
     
     try {
       const result = await client.graphql({
@@ -53,6 +57,7 @@ export default function Portfolio() {
       });
       
       console.log('Stock added successfully:', result);
+      setMessage({ text: 'Stock added successfully!', type: 'success' });
       
       // Reset form after successful submission
       setStock({
@@ -66,18 +71,27 @@ export default function Portfolio() {
       });
     } catch (error) {
       console.error('Error adding stock:', error);
+      setMessage({ text: 'Error adding stock. Please try again.', type: 'error' });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <>
       <Navbar />
-      <main className="container mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-4">Portfolio Management</h1>
+      <main className="portfolio-container">
+        <h1 className="portfolio-heading">Portfolio Management</h1>
         
-        <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-          <div className="mb-4">
-            <label htmlFor="symbol" className="block mb-2">Stock Symbol</label>
+        {message.text && (
+          <div className={`message ${message.type}`}>
+            {message.text}
+          </div>
+        )}
+        
+        <form onSubmit={handleSubmit} className="portfolio-form">
+          <div className="form-group">
+            <label htmlFor="symbol">Stock Symbol</label>
             <input
               type="text"
               id="symbol"
@@ -85,18 +99,16 @@ export default function Portfolio() {
               value={stock.symbol}
               onChange={handleChange}
               required
-              className="w-full p-2 border rounded"
             />
           </div>
 
-          <div className="mb-4">
-            <label htmlFor="type" className="block mb-2">Type</label>
+          <div className="form-group">
+            <label htmlFor="type">Type</label>
             <select
               id="type"
               name="type"
               value={stock.type}
               onChange={handleChange}
-              className="w-full p-2 border rounded"
             >
               <option value="Stock">Stock</option>
               <option value="ETF">ETF</option>
@@ -104,14 +116,13 @@ export default function Portfolio() {
             </select>
           </div>
 
-          <div className="mb-4">
-            <label htmlFor="region" className="block mb-2">Region</label>
+          <div className="form-group">
+            <label htmlFor="region">Region</label>
             <select
               id="region"
               name="region"
               value={stock.region}
               onChange={handleChange}
-              className="w-full p-2 border rounded"
             >
               <option value="US">US</option>
               <option value="EU">EU</option>
@@ -119,8 +130,8 @@ export default function Portfolio() {
             </select>
           </div>
 
-          <div className="mb-4">
-            <label htmlFor="name" className="block mb-2">Stock Name</label>
+          <div className="form-group">
+            <label htmlFor="name">Stock Name</label>
             <input
               type="text"
               id="name"
@@ -128,12 +139,11 @@ export default function Portfolio() {
               value={stock.name}
               onChange={handleChange}
               required
-              className="w-full p-2 border rounded"
             />
           </div>
 
-          <div className="mb-4">
-            <label htmlFor="pdp" className="block mb-2">Price Dip Percent (PDP)</label>
+          <div className="form-group">
+            <label htmlFor="pdp">Price Dip Percent (PDP)</label>
             <input
               type="number"
               id="pdp"
@@ -141,12 +151,11 @@ export default function Portfolio() {
               value={stock.pdp}
               onChange={handleChange}
               step="0.01"
-              className="w-full p-2 border rounded"
             />
           </div>
 
-          <div className="mb-4">
-            <label htmlFor="plr" className="block mb-2">Profit Loss Ratio (PLR)</label>
+          <div className="form-group">
+            <label htmlFor="plr">Profit Loss Ratio (PLR)</label>
             <input
               type="number"
               id="plr"
@@ -154,27 +163,26 @@ export default function Portfolio() {
               value={stock.plr}
               onChange={handleChange}
               step="0.01"
-              className="w-full p-2 border rounded"
             />
           </div>
 
-          <div className="mb-4">
-            <label htmlFor="budget" className="block mb-2">Annual Budget</label>
+          <div className="form-group">
+            <label htmlFor="budget">Annual Budget</label>
             <input
               type="number"
               id="budget"
               name="budget"
               value={stock.budget}
               onChange={handleChange}
-              className="w-full p-2 border rounded"
             />
           </div>
 
           <button 
             type="submit" 
-            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+            className={`submit-button ${isLoading ? 'loading' : ''}`}
+            disabled={isLoading}
           >
-            Add Stock
+            {isLoading ? 'Adding...' : 'Add Stock'}
           </button>
         </form>
       </main>

@@ -2,11 +2,6 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Amplify } from "aws-amplify";
-import outputs from "@/amplify_outputs.json";
-import "@aws-amplify/ui-react/styles.css";
-
-Amplify.configure(outputs);
 
 export default function App() {
   const router = useRouter();
@@ -16,5 +11,9 @@ export default function App() {
     router.push('/portfolio');
   }, [router]);
 
-  return null; // This component won't render anything as it immediately redirects
+  return (
+    <div className="loading-container">
+      <p>Loading portfolio...</p>
+    </div>
+  );
 }
